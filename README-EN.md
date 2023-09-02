@@ -2,7 +2,7 @@
 请查看 [README.md](https://github.com/chvin/react-tetris/blob/master/README.md)
 
 ----
-## Use React, Redux, Immutable to code Tetris.
+##THOS IS A TESTS Use React, Redux, Immutable to code Tetris.
 
 ----
 Tetris is a classic game that has always been enthusiastically implemented in various languages. There are many versions of it in Javascript, and using React to do Tetris has become my goal.
