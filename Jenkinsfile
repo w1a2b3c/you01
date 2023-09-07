@@ -68,12 +68,16 @@ pipeline {
             }
         }
         stage('Publish'){
+            script{
             steps{
-                sh 'docker login -u=cholewap -p=Pawelekx9'
+                withCredentials([usernamePassword(credentialsId: 'DOCKERHUB', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                sh 'docker login -u=${USER} -p=${PASS}'
+                }
                 sh 'docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} cholewap/${DOCKER_IMAGE}:${DOCKER_TAG}'
                 sh 'docker push cholewap/${DOCKER_IMAGE}:${DOCKER_TAG}'
                 sh 'docker save ${DOCKER_IMAGE}:${DOCKER_TAG} > ${ARTIFACT_NAME}.tar'
                 archiveArtifacts artifacts: "${ARTIFACT_NAME}.tar", fingerprint: true
+            }
             }
                 post {
                     success {
