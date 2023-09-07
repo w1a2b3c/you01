@@ -8,3 +8,10 @@ RUN npm run build
 FROM build as test
 WORKDIR "./react-tetris"
 RUN npm run test
+
+FROM build as run
+WORKDIR "./react-tetris"
+EXPOSE 8080
+RUN npm run start
+
+
