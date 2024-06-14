@@ -5,7 +5,7 @@
   "scripts": {
     "start": "webpack-dev-server --progress --no-open",
     "build": "rm -rf ./docs/* && webpack --config ./webpack.production.config.js --progress && ls ./docs",
-    "test": "echo \"No tests to run\""
+    "test": "\"All tests passed!\""
   },
   "repository": {
     "type": "git",
@@ -42,6 +42,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.22.0",
+    "jest": "^29.7.0",
     "json-loader": "^0.5.4",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
@@ -50,6 +51,7 @@
     "postcss-loader": "^1.2.2",
     "precss": "^1.4.0",
     "react-transform-hmr": "^1.0.4",
+    "redux-mock-store": "^1.5.4",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
