@@ -7,18 +7,17 @@ var autoprefixer = require('autoprefixer');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var version = require('./package.json').version;
 
+// Entrada do programa
+var entrada =  __dirname + '/src/index.js';
 
-// 程序入口
-var entry =  __dirname + '/src/index.js';
-
-// 输出文件
-var output =  {
+// Arquivo de saída
+var saida =  {
   filename: 'page/[name]/index.js',
   chunkFilename: 'chunk/[name].[chunkhash:5].chunk.js',
 };
 
-// 生成source-map追踪js错误
-var devtool = 'source-map';
+// Gerar source-map para rastreamento de erros de js
+var ferramentaDev = 'source-map';
 
 // eslint
 var eslint =  {
@@ -26,7 +25,7 @@ var eslint =  {
 }
 
 // loader
-var loaders = [
+var carregadores = [
     {
       test: /\.(json)$/,
       exclude: /node_modules/,
@@ -39,7 +38,7 @@ var loaders = [
     },
     {
       test: /\.(?:png|jpg|gif)$/,
-      loader: 'url?limit=8192', //小于8k,内嵌;大于8k生成文件
+      loader: 'url?limit=8192', // Arquivos menores que 8k serão embutidos; maiores que 8k serão gerados como arquivo
     },
     {
       test: /\.less/,
@@ -47,59 +46,59 @@ var loaders = [
     }
 ];
 
-// dev plugin
-var devPlugins =  [
+// Plugins de desenvolvimento
+var pluginsDev =  [
   new CopyWebpackPlugin([
     { from: './src/resource/music/music.mp3' },
     { from: './src/resource/css/loader.css' },
   ]),
-  // 热更新
+  // Hot module replacement
   new webpack.HotModuleReplacementPlugin(),
-  // 允许错误不打断程序, 仅开发模式需要
+  // Permitir erros sem interromper o programa, necessário apenas no modo de desenvolvimento
   new webpack.NoErrorsPlugin(),
-  // 打开浏览器页面
+  // Abrir página no navegador
   new OpenBrowserPlugin({
     url: 'http://127.0.0.1:8080/'
   }),
-  // css打包
+  // Empacotar CSS
   new ExtractTextPlugin('css.css', {
     allChunks: true
   }),
 ]
 
-// production plugin
-var productionPlugins = [
-  // 定义生产环境
+// Plugins de produção
+var pluginsProducao = [
+  // Definir ambiente de produção
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': '"production"',
   }),
-  // 复制
+  // Copiar arquivos
   new CopyWebpackPlugin([
     { from: './src/resource/music/music.mp3' },
     { from: './src/resource/css/loader.css' },
   ]),
-  // HTML 模板
+  // Template HTML
   new HtmlWebpackPlugin({
     template: __dirname + '/server/index.tmpl.html'
   }),
-  // JS压缩
+  // Minificar JS
   new webpack.optimize.UglifyJsPlugin({
     compress: {
       warnings: false
     }}
   ),
-  // css打包
+  // Empacotar CSS
   new ExtractTextPlugin('css-' + version + '.css', {
     allChunks: true
   }),
 ];
 
-// dev server
-var devServer = {
+// Servidor de desenvolvimento
+var servidorDev = {
   contentBase: './server',
   colors: true,
   historyApiFallback: false,
-  port: 8080, // defaults to "8080"
+  port: 8080, // padrão é "8080"
   hot: true, // Hot Module Replacement
   inline: true, // Livereload
   host: '0.0.0.0',
@@ -107,13 +106,13 @@ var devServer = {
 };
 
 module.exports = {
-  entry: entry,
-  devtool: devtool,
-  output: output,
-  loaders: loaders,
-  devPlugins: devPlugins,
-  productionPlugins: productionPlugins,
-  devServer: devServer,
+  entry: entrada,
+  devtool: ferramentaDev,
+  output: saida,
+  loaders: carregadores,
+  devPlugins: pluginsDev,
+  productionPlugins: pluginsProducao,
+  devServer: servidorDev,
   postcss: function () {
     return [precss, autoprefixer];
   },
