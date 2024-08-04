@@ -17,7 +17,7 @@ export default class Logo extends React.Component {
     this.animate(this.props);
   }
   componentWillReceiveProps(nextProps) {
-    if ( // 只有在游戏进入开始, 或结束时 触发改变
+    if ( // As alterações só são acionadas quando o jogo entra no início ou termina
       (
         [this.props.cur, nextProps.cur].indexOf(false) !== -1 &&
         (this.props.cur !== nextProps.cur)

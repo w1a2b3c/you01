@@ -1,51 +1,51 @@
 import { blockType, StorageKey } from './const';
 
-const hiddenProperty = (() => { // document[hiddenProperty] 可以判断页面是否失焦
-  let names = [
+const propriedadeOculta = (() => { // document[hiddenProperty] pode determinar se a página perdeu o foco
+  let nomes = [
     'hidden',
     'webkitHidden',
     'mozHidden',
     'msHidden',
   ];
-  names = names.filter((e) => (e in document));
-  return names.length > 0 ? names[0] : false;
+  nomes = nomes.filter((e) => (e in document));
+  return nomes.length > 0 ? nomes[0] : false;
 })();
 
-const visibilityChangeEvent = (() => {
-  if (!hiddenProperty) {
+const eventoMudancaVisibilidade = (() => {
+  if (!propriedadeOculta) {
     return false;
   }
-  return hiddenProperty.replace(/hidden/i, 'visibilitychange'); // 如果属性有前缀, 相应的事件也有前缀
+  return propriedadeOculta.replace(/hidden/i, 'visibilitychange'); // Se a propriedade tem prefixo, o evento correspondente também terá
 })();
 
-const isFocus = () => {
-  if (!hiddenProperty) { // 如果不存在该特性, 认为一直聚焦
+const estaFocado = () => {
+  if (!propriedadeOculta) { // Se essa característica não existe, assume-se que está sempre focado
     return true;
   }
-  return !document[hiddenProperty];
+  return !document[propriedadeOculta];
 };
 
-const unit = {
-  getNextType() { // 随机获取下一个方块类型
+const unidade = {
+  getProximoTipo() { // Obter o próximo tipo de bloco aleatoriamente
     const len = blockType.length;
     return blockType[Math.floor(Math.random() * len)];
   },
-  want(next, matrix) { // 方块是否能移到到指定位置
+  quer(next, matrix) { // O bloco pode mover para a posição especificada?
     const xy = next.xy;
     const shape = next.shape;
     const horizontal = shape.get(0).size;
     return shape.every((m, k1) => (
       m.every((n, k2) => {
-        if (xy[1] < 0) { // left
+        if (xy[1] < 0) { // esquerda
           return false;
         }
-        if (xy[1] + horizontal > 10) { // right
+        if (xy[1] + horizontal > 10) { // direita
           return false;
         }
-        if (xy[0] + k1 < 0) { // top
+        if (xy[0] + k1 < 0) { // topo
           return true;
         }
-        if (xy[0] + k1 >= 20) { // bottom
+        if (xy[0] + k1 >= 20) { // fundo
           return false;
         }
         if (n) {
@@ -58,25 +58,25 @@ const unit = {
       })
     ));
   },
-  isClear(matrix) { // 是否达到消除状态
-    const clearLines = [];
+  estaLimpo(matrix) { // Estado de limpeza alcançado?
+    const linhasLimpar = [];
     matrix.forEach((m, k) => {
       if (m.every(n => !!n)) {
-        clearLines.push(k);
+        linhasLimpar.push(k);
       }
     });
-    if (clearLines.length === 0) {
+    if (linhasLimpar.length === 0) {
       return false;
     }
-    return clearLines;
+    return linhasLimpar;
   },
-  isOver(matrix) { // 游戏是否结束, 第一行落下方块为依据
+  estaTerminado(matrix) { // O jogo terminou? A primeira linha com bloco é o critério
     return matrix.get(0).some(n => !!n);
   },
-  subscribeRecord(store) { // 将状态记录到 localStorage
+  registrarRecord(store) { // Registrar estado no localStorage
     store.subscribe(() => {
       let data = store.getState().toJS();
-      if (data.lock) { // 当状态为锁定, 不记录
+      if (data.lock) { // Quando o estado está bloqueado, não registrar
         return;
       }
       data = JSON.stringify(data);
@@ -87,7 +87,7 @@ const unit = {
       localStorage.setItem(StorageKey, data);
     });
   },
-  isMobile() { // 判断是否为移动端
+  ehMobile() { // Determinar se é um dispositivo móvel
     const ua = navigator.userAgent;
     const android = /Android (\d+\.\d+)/.test(ua);
     const iphone = ua.indexOf('iPhone') > -1;
@@ -96,8 +96,8 @@ const unit = {
     const nokiaN = ua.indexOf('NokiaN') > -1;
     return android || iphone || ipod || ipad || nokiaN;
   },
-  visibilityChangeEvent,
-  isFocus,
+  eventoMudancaVisibilidade,
+  estaFocado,
 };
 
-module.exports = unit;
+module.exports = unidade;
