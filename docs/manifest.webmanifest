@@ -1,0 +1,17 @@
+{
+  "name": "Github Page PWA",
+  "short_name": "GPPWA",
+  "description": "Github Page as a Progressive Web App",
+  "scope": "/react-tetris/",
+  "start_url": "/react-tetris/",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "display": "standalone", 
+  "icons": [
+      {
+        "src": "/react-tetris/img/icon.png",
+        "type": "image/png",
+        "sizes": "700x700"
+      }
+  ]
+}
