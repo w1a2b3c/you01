@@ -4,9 +4,9 @@ var VERSION = 'version_002';
 var URLS = [    
   `${GHPATH}/`,
   `${GHPATH}/index.html`,
-  `${GHPATH}/css/styles.css`,
-  `${GHPATH}/img/icon.png`,
-  `${GHPATH}/js/app.js`
+  `${GHPATH}/css-1.0.1.css`,
+  `${GHPATH}/app-1.0.1.js`,
+  `${GHPATH}/loader.css`
 ]
 
 var CACHE_NAME = APP_PREFIX + VERSION
