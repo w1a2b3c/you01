@@ -1,5 +1,5 @@
 var GHPATH = '/react-tetris';
-var APP_PREFIX = 'gppwa_';
+var APP_PREFIX = 'react_tetris_';
 var VERSION = 'version_002';
 var URLS = [    
   `${GHPATH}/`,
