@@ -9,6 +9,7 @@
     <meta charset="UTF-8">
     <title>俄罗斯方块</title>
     <link href="./loader.css" rel="stylesheet" />
+    <link rel="manifest" href="/react-tetris/manifest.webmanifest" />
 <link href="css-1.0.1.css" rel="stylesheet"></head>
 <body>
 <div id="root">
@@ -16,5 +17,14 @@
         <div class="loader">加载中...</div>
     </div>
 </div>
+<script>
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.register (
+        '/react-tetris/sw.js',
+        {scope: '/react-tetris/'}
+      )
+    }
+</script>
+
 <script type="text/javascript" src="app-1.0.1.js"></script></body>
 </html>

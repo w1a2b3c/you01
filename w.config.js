@@ -77,6 +77,9 @@ var productionPlugins = [
   new CopyWebpackPlugin([
     { from: './src/resource/music/music.mp3' },
     { from: './src/resource/css/loader.css' },
+    { from: './server/img', to: 'img' },
+    { from: './server/manifest.webmanifest'},
+    { from: './server/sw.js' },
   ]),
   // HTML 模板
   new HtmlWebpackPlugin({
