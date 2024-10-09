@@ -1,6 +1,6 @@
 import { List } from 'immutable';
 import { blockShape, origin } from './const';
-#주석을 추가해 봅니다.
+
 class Block {
   constructor(option) {
     this.type = option.type;
